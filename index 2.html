@@ -1,0 +1,28 @@
+<!doctype html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Secret Mission</title><style>
+:root{--ink:#28231f;--muted:#766d65;--paper:#fbf8f3;--card:#fffdf9;--line:#ded5ca;--gold:#9a774e}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at 20% 5%,rgba(154,119,78,.08),transparent 30%),var(--paper);color:var(--ink);font-family:Georgia,"Times New Roman","Songti SC","Noto Serif SC",serif;padding:22px}
+.wrap{width:min(100%,480px);margin:0 auto}.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:30px 26px;box-shadow:0 18px 60px rgba(55,43,34,.08)}
+.header{text-align:center}.lock{font-size:34px}.title{font-size:30px;letter-spacing:.08em;margin:8px 0}.sub{color:var(--muted);font-size:15px;letter-spacing:.08em}
+.rules{margin-top:24px;padding:22px 20px;border:1px solid var(--line);border-radius:18px}.rules h2{text-align:center;font-size:18px;letter-spacing:.13em;margin:0 0 17px}.rules p{margin:0;font-size:15px;line-height:1.72}.rules .cn{border-top:1px solid var(--line);margin-top:16px;padding-top:16px}
+label{display:block;margin:25px 0 8px 4px;color:var(--muted);font-size:14px}input{width:100%;padding:15px 16px;border:1px solid var(--line);border-radius:14px;background:white;font-size:17px;color:var(--ink);outline:none}
+button{width:100%;margin-top:14px;padding:16px;border:0;border-radius:14px;background:var(--ink);color:white;font-size:15px;font-weight:700;letter-spacing:.08em;cursor:pointer}.error{min-height:20px;margin-top:9px;font-size:13px;color:#9b4d45;text-align:center}
+.mission{text-align:center}.hello{color:var(--muted);font-size:16px;margin-top:4px}.divider{height:1px;background:var(--line);margin:22px 0}.zh{font-size:22px;line-height:1.75;font-weight:600}.en{font-size:18px;line-height:1.65;font-style:italic;color:#4f4842;margin-top:20px}.reward{display:inline-block;margin-top:28px;padding:10px 18px;border:1px solid var(--line);border-radius:999px;font-size:14px;font-weight:700}.secret{margin-top:20px;color:var(--muted);font-size:13px}
+</style></head>
+<body><main class="wrap"><section class="card">
+<div class="header"><div class="lock">🔐</div><h1 class="title">SECRET MISSION</h1><div class="sub">今晚的专属隐藏任务</div></div>
+<div class="rules"><h2>GAME RULES · 游戏规则</h2>
+<p>This is your special secret mission for tonight. Complete the task without being noticed by others to earn an extra <strong>50 chips</strong>! If someone correctly figures out and says what your mission is while you are carrying it out, the mission fails. Participation is completely optional. 📸 After completing the mission, you’ll need to provide proof — a photo/video, or make sure the groom or bride sees it happen.</p>
+<p class="cn">这是你今晚的专属隐藏任务。在不被其他人发现的情况下完成任务，即可额外获得 <strong>50 筹码</strong>！如果执行任务过程中被其他人准确识破并说出你的任务内容，则任务失败。任务为自愿参与，不强制完成。📸 完成任务后需要提供证据：拍照 / 录像，或确保新郎或新娘亲眼看到。</p></div>
+<form id="nameForm"><label for="guestName">Enter your name / 输入你的名字</label><input id="guestName" name="guestName" autocomplete="name" placeholder="Your name"><button type="submit">REVEAL MY MISSION</button><div class="error" id="error"></div></form>
+</section></main>
+<script>
+document.getElementById("nameForm").addEventListener("submit",function(e){
+ e.preventDefault();
+ var name=document.getElementById("guestName").value.trim().toLowerCase();
+ var error=document.getElementById("error");
+ if(name==="kay"){ window.location.href="kay.html"; }
+ else if(!name){ error.textContent="Please enter your name first. / 请先输入你的名字。"; }
+ else{ error.textContent="Sorry, no mission has been assigned to this name yet. / 这个名字暂时还没有分配任务。"; }
+});
+</script></body></html>
