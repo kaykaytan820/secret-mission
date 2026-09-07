@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Secret Mission</title>
+<style>
+:root{--ink:#28231f;--muted:#766d65;--paper:#fbf8f3;--card:#fffdf9;--line:#ded5ca}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:var(--paper);color:var(--ink);font-family:Georgia,"Times New Roman","Songti SC",serif;padding:22px}
+.wrap{width:min(100%,480px);margin:auto}.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:30px 26px;box-shadow:0 18px 60px rgba(55,43,34,.08)}.header,.mission{text-align:center}
+.lock{font-size:34px}h1{font-size:29px;letter-spacing:.08em;margin:8px 0}.sub,.hello{color:var(--muted);font-size:15px}
+.rules{margin-top:24px;padding:21px 19px;border:1px solid var(--line);border-radius:18px}.rules h2{text-align:center;font-size:18px;letter-spacing:.13em;margin:0 0 16px}.rules p{margin:0;font-size:15px;line-height:1.72}.rules .cn{border-top:1px solid var(--line);margin-top:16px;padding-top:16px}
+label{display:block;margin:25px 0 8px 4px;color:var(--muted);font-size:14px}input{width:100%;padding:15px;border:1px solid var(--line);border-radius:14px;font-size:17px;background:white}
+button{width:100%;margin-top:14px;padding:16px;border:0;border-radius:14px;background:var(--ink);color:white;font-size:15px;font-weight:700;letter-spacing:.08em}.error{min-height:20px;color:#9b4d45;text-align:center;font-size:13px;margin-top:9px}
+#missionScreen{display:none}.divider{height:1px;background:var(--line);margin:22px 0}.zh{font-size:21px;line-height:1.75;font-weight:600}.en{font-size:17px;line-height:1.65;font-style:italic;color:#4f4842;margin-top:19px}.reward{display:inline-block;margin-top:27px;padding:10px 18px;border:1px solid var(--line);border-radius:999px;font-size:14px;font-weight:700}.secret{margin-top:20px;color:var(--muted);font-size:13px}
+</style></head>
+<body><main class="wrap">
+<section class="card" id="homeScreen">
+<div class="header"><div class="lock">🔐</div><h1>SECRET MISSION</h1><div class="sub">今晚的专属隐藏任务</div></div>
+<div class="rules"><h2>GAME RULES · 游戏规则</h2>
+<p>This is your special secret mission for tonight. Complete the task without being noticed by others to earn an extra <strong>50 chips</strong>! If someone correctly figures out and says what your mission is while you are carrying it out, the mission fails. Participation is completely optional. 📸 After completing the mission, you’ll need to provide proof — a photo/video, or make sure the groom or bride sees it happen.</p>
+<p class="cn">这是你今晚的专属隐藏任务。在不被其他人发现的情况下完成任务，即可额外获得 <strong>50 筹码</strong>！如果执行任务过程中被其他人准确识破并说出你的任务内容，则任务失败。任务为自愿参与，不强制完成。📸 完成任务后需要提供证据：拍照 / 录像，或确保新郎或新娘亲眼看到。</p></div>
+<form id="form"><label for="name">Enter your name / 输入你的名字</label><input id="name" autocomplete="off" placeholder="Your name"><button type="submit">REVEAL MY MISSION</button><div class="error" id="error"></div></form>
+</section>
+<section class="card mission" id="missionScreen"><div class="lock">🤫</div><h1>YOUR SECRET MISSION</h1><div class="hello" id="hello"></div><div class="divider"></div><div class="zh" id="zh"></div><div class="en" id="en"></div><div class="reward">REWARD · +50 CHIPS</div><div class="secret">Keep your mission a secret.</div></section>
+</main>
+<script>
+const missions={"katrina": {"name": "Katrina", "en": "Find someone you’ve just met or don’t know very well. Write down your first impression of them, then your final impression 2 hours later. Read both aloud when the secret missions are revealed.", "zh": "找一位今天第一次认识的／不太熟悉的朋友，分别记录你对 TA 的「第一印象」和 2 小时后的「最终印象」。在隐藏任务揭晓环节读出来。"}, "ricky": {"name": "Ricky", "en": "Initiate a toast with 3 different people and get each of them to say a different toast.", "zh": "分别找 3 个人主动碰杯，并成功让他们说出不同的祝酒词。"}, "renee": {"name": "Renee", "en": "Naturally compliment 5 different people at different times. Each compliment must be different.", "zh": "在不同时间自然地夸奖 5 个人，每次夸奖的内容不能重复。"}, "jenny": {"name": "Jenny", "en": "Take 3 photos in different poses with your assigned person without letting them know it’s part of your mission.", "zh": "在对方不知道这是任务的情况下，成功和指定的人拍 3 张不同姿势的合照。"}, "james ko": {"name": "James Ko", "en": "Secretly take photos of at least 3 different friends while they’re eating — without getting caught!", "zh": "秘密拍下至少 3 位不同朋友正在吃东西的照片，不能被本人发现。"}, "katey": {"name": "Katey", "en": "Convince 3 different people to drink for you.", "zh": "成功说服 3 位不同的人替你喝酒。"}, "du": {"name": "Du", "en": "Pour drinks for 5 different people without anyone asking you to.", "zh": "在没人开口要求的情况下，主动给 5 个不同的人倒酒水。"}, "ray": {"name": "Ray", "en": "Secretly “borrow” one item from each of 3 different friends without getting caught. Return everything when the secret missions are revealed.", "zh": "在不被发现的情况下，从 3 位不同朋友身边“顺走”一件物品，并在隐藏任务揭晓时全部归还。"}, "rayson": {"name": "Rayson", "en": "Find the hidden ring somewhere on the ground floor.", "zh": "找到藏在一楼的一枚戒指。"}, "nia": {"name": "Nia", "en": "Naturally use the same unusual word 5 times in conversation without anyone calling you out. For example: “penguin”, “romantic”, or “professional”.", "zh": "在聊天过程中自然地把同一个奇怪词说 5 次，而且不能被人指出。例如：“企鹅”“浪漫”“专业”。"}, "raymond": {"name": "Raymond", "en": "Introduce 2 people who weren’t already talking, get them into a conversation, then quietly slip away.", "zh": "让两位原本没在聊天的人因为你的介绍开始聊起来，然后自己悄悄离开。"}};
+const norm=s=>s.trim().toLowerCase().replace(/\s+/g," ");
+document.getElementById("form").addEventListener("submit",e=>{
+ e.preventDefault();
+ const key=norm(document.getElementById("name").value);
+ const m=missions[key], err=document.getElementById("error");
+ if(!key){err.textContent="Please enter your name first. / 请先输入你的名字。";return}
+ if(!m){err.textContent="Name not found. Please check the spelling. / 找不到这个名字，请检查拼写。";return}
+ document.getElementById("hello").textContent="Good luck, "+m.name+"!";
+ document.getElementById("zh").textContent=m.zh;
+ document.getElementById("en").textContent=m.en;
+ document.getElementById("homeScreen").style.display="none";
+ document.getElementById("missionScreen").style.display="block";
+ window.scrollTo(0,0);
+});
+</script></body></html>
